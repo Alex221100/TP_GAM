@@ -1,0 +1,2 @@
+INSERT INTO Patient (IPP, NOM, PRENOM)
+VALUES ('455434243', 'Drz', 'Alex');
