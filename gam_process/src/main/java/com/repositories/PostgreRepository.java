@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 @Repository
@@ -29,7 +30,6 @@ public class PostgreRepository implements IPostgreRepository{
                             rs.getString("NOMMAR"),
                             rs.getString("DDN"),
                             rs.getString("SEXE"),
-                            rs.getString("IEP"),
                             rs.getString("ADR1"),
                             rs.getString("ADR2"),
                             rs.getString("CP"),
@@ -37,12 +37,7 @@ public class PostgreRepository implements IPostgreRepository{
                             rs.getString("PAYS"),
                             rs.getString("TEL"),
                             rs.getString("PAYSN"),
-                            rs.getString("DDS"),
-                            rs.getString("UF"),
-                            rs.getString("CHAMBRE"),
-                            rs.getString("LIT"),
-                            rs.getString("UFMED"),
-                            rs.getString("NUMPAS")
+                            rs.getString("DDS")
                     );
                 }
             }
@@ -51,5 +46,27 @@ public class PostgreRepository implements IPostgreRepository{
             System.err.println("Impossible de récupérer le patient : " + e.getMessage());
         }
         return patient;
+    }
+
+    public int updatePatient(Patient patient){
+        try {
+            Connection connection = PostgreSQLJDBC.getConnection();
+            Statement statement = connection.createStatement();
+            String sql = "UPDATE Patient SET DATEMSG = '"+ patient.getDATEMSG() + "',NUMMSG = '"+ patient.getNUMMSG()+
+                    "',NOM = '" + patient.getNOM() + "',PRENOM = '" + patient.getPRENOM() + "',INTIT = '" +
+                    patient.getINTIT() + "',NOMMAR = '" + patient.getNOMMAR() + "',DDN = '" + patient.getDDN() +
+                    "',SEXE = '" + patient.getSEXE() + "',ADR1 = '" + patient.getADR1() + "',ADR2 = '" +
+                    patient.getADR2() + "',CP = '" + patient.getCP() + "',VILLE = '" + patient.getVILLE() +
+                    "',PAYS = '" + patient.getPAYS() + "',TEL = '" + patient.getTEL() + "',PAYSN = '" +
+                    patient.getPAYSN() + "',DDS = '" + patient.getDDS() + "' WHERE IPP = '" + patient.getIPP() + "';";
+
+            statement.executeUpdate(sql);
+            statement.close();
+            connection.close();
+            return statement.getUpdateCount();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return 0;
     }
 }

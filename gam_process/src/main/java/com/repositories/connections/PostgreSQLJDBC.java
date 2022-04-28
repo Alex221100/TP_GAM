@@ -46,7 +46,6 @@ public class PostgreSQLJDBC {
                         NOMMAR VARCHAR(20),
                         DDN VARCHAR(20),
                         SEXE VARCHAR(20),
-                        IEP VARCHAR(20), 
                         ADR1 VARCHAR(200), 
                         ADR2 VARCHAR(200), 
                         CP VARCHAR(6), 
@@ -54,13 +53,11 @@ public class PostgreSQLJDBC {
                         PAYS VARCHAR(20),
                         TEL VARCHAR(10),
                         PAYSN VARCHAR(20),
-                        DDS VARCHAR(20), 
-                        UF VARCHAR(20), 
-                        CHAMBRE VARCHAR(20), 
-                        LIT VARCHAR(20), 
-                        UFMED VARCHAR(20),
-                        NUMPAS VARCHAR(20) 
+                        DDS VARCHAR(20)
                     );
+                    
+                    INSERT INTO Patient (IPP, NOM, PRENOM) VALUES ('455434243', 'Drz', 'Alex');
+                    INSERT INTO Patient (IPP, NOM, PRENOM) VALUES ('455434245', 'Ribaut', 'Thomas');
                     """;
             statement.executeUpdate(sql);
 
