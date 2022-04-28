@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: zuul
+
+server:
+  port: 8081
+
+zuul:
+  routes:
+    foos:
+      path: /process/**
+      url: http://localhost:8081/process/
+  host:
+    socket-timeout-millis: 30000
