@@ -1,5 +1,6 @@
 package com.repositories;
 
+import com.entity.Entry;
 import com.entity.Patient;
 import com.repositories.connections.PostgreSQLJDBC;
 import org.springframework.stereotype.Repository;
@@ -59,6 +60,25 @@ public class PostgreRepository implements IPostgreRepository{
                     patient.getADR2() + "',CP = '" + patient.getCP() + "',VILLE = '" + patient.getVILLE() +
                     "',PAYS = '" + patient.getPAYS() + "',TEL = '" + patient.getTEL() + "',PAYSN = '" +
                     patient.getPAYSN() + "',DDS = '" + patient.getDDS() + "' WHERE IPP = '" + patient.getIPP() + "';";
+
+            statement.executeUpdate(sql);
+            statement.close();
+            connection.close();
+            return statement.getUpdateCount();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+
+    public int createEntry(Entry entry){
+        try {
+            Connection connection = PostgreSQLJDBC.getConnection();
+            Statement statement = connection.createStatement();
+            String sql = "INSERT INTO Entry(IPP,IEP,DATE_ENTREE,DATE_SORTIE,UF,CHAMBRE,LIT,UFMED,NUMPAS) VALUES ('" +
+                    entry.getIPP() + "', '" + entry.getIEP() + "', '" + entry.getDATE_ENTREE() + "', '" +
+                    entry.getDATE_SORTIE() + "', '" + entry.getUF() + "', '" + entry.getCHAMBRE() + "', '" +
+                    entry.getLIT() + "', '" + entry.getUFMED() + "', '" + entry.getNUMPAS() + "');";
 
             statement.executeUpdate(sql);
             statement.close();

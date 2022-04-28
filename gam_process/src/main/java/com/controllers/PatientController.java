@@ -2,6 +2,9 @@ package com.controllers;
 
 import com.entity.Entry;
 import com.entity.Patient;
+import com.exceptions.NotFoundPatientException;
+import com.exceptions.NotModificationException;
+import com.exceptions.SameIdentityException;
 import com.services.interfaces.IManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -35,8 +38,34 @@ public class PatientController {
      * @param patient
      ****************************************/
     @PostMapping(value="/gam_process/patient/update",produces={"application/json"})
-    public ResponseEntity<String> updatePatient(@RequestBody Patient patient) {
-        managerService.updatePatient(patient);
-        return new ResponseEntity<>("{\"response\":\"patient updated\"}", HttpStatus.OK);
+    public ResponseEntity<String> updatePatient(@RequestBody Patient patient) throws NotModificationException, SameIdentityException, NotFoundPatientException {
+        try {
+            managerService.updatePatient(patient);
+            return new ResponseEntity<>("{\"response\":\"patient updated\"}", HttpStatus.OK);
+        }catch(NotModificationException e){
+            return new ResponseEntity<>("{\"response : error with the database\"}", HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch(SameIdentityException e){
+            return new ResponseEntity<>("{\"response\":\"many patients have the same ipp\"}", HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch(NotFoundPatientException e) {
+            return new ResponseEntity<>("{\"response\":\"patient with this ipp is not found\"}", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /****************************************
+     * Entry a patient
+     * @param entry
+     ****************************************/
+    @PutMapping(value="/gam_process/patient/entry",produces={"application/json"})
+    public ResponseEntity<String> updatePatient(@RequestBody Entry entry) throws NotModificationException, SameIdentityException, NotFoundPatientException {
+        try {
+            managerService.entryPatient(entry);
+            return new ResponseEntity<>("{\"response\":\"entry accepted\"}", HttpStatus.OK);
+        }catch(NotModificationException e){
+            return new ResponseEntity<>("{\"response : error with the database\"}", HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch(SameIdentityException e){
+            return new ResponseEntity<>("{\"response\":\"many patients have the same ipp\"}", HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch(NotFoundPatientException e) {
+            return new ResponseEntity<>("{\"response\":\"patient with this ipp is not found\"}", HttpStatus.NOT_FOUND);
+        }
     }
 }

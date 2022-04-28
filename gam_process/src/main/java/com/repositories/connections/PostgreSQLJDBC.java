@@ -56,6 +56,18 @@ public class PostgreSQLJDBC {
                         DDS VARCHAR(20)
                     );
                     
+                    CREATE TABLE IF NOT EXISTS Entry (
+                        IPP VARCHAR(20),
+                        IEP VARCHAR(20),
+                        DATE_ENTREE VARCHAR(20),
+                        DATE_SORTIE VARCHAR(20),
+                        UF VARCHAR(20),
+                        CHAMBRE VARCHAR(20),
+                        LIT VARCHAR(20),
+                        UFMED VARCHAR(20),
+                        NUMPAS VARCHAR(20)
+                    );
+                    
                     INSERT INTO Patient (IPP, NOM, PRENOM) VALUES ('455434243', 'Drz', 'Alex');
                     INSERT INTO Patient (IPP, NOM, PRENOM) VALUES ('455434245', 'Ribaut', 'Thomas');
                     """;
