@@ -1,13 +1,6 @@
-spring:
-  application:
-    name: zuul
-
-server:
-  port: 8081
-
 zuul:
   routes:
-    foos:
+    process:
       path: /process/**
       url: http://localhost:8081/process/
   host:

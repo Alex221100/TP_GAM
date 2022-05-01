@@ -17,10 +17,11 @@ public class ProcessController {
     //@Value("${zuul.defaultRoute}")
     private String defaultRoute;
 
-    @GetMapping("/process/gam_query/existById/{id}")
-    public Object existById(@PathVariable long id, HttpServletRequest req, HttpServletResponse res) {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Boolean> response = restTemplate.getForEntity(defaultRoute + "/gam_query/" + id, Boolean.class);
-        return response;
+    @GetMapping("/process/test")
+    public String existByIpp(@PathVariable String ipp, HttpServletRequest req, HttpServletResponse res) {
+        return ("ok");
+        /*RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Boolean> response = restTemplate.getForEntity(defaultRoute + "/gam_process/" + ipp, Boolean.class);
+        return response;*/
     }
 }

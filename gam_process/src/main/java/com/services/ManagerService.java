@@ -51,4 +51,9 @@ public class ManagerService implements IManagerService {
         }
     }
 
+    public Patient getPatientByIpp(String patientIpp){
+        Patient patient = postgreRepository.getPatientByIpp(patientIpp);
+        return patient;
+    }
+
 }
