@@ -1,5 +1,6 @@
 package com.controllers;
 
+import com.model.PatientEntry;
 import com.entity.Entry;
 import com.entity.Patient;
 import com.exceptions.NotFoundPatientException;
@@ -36,7 +37,7 @@ public class PatientController {
     }
 
     /****************************************
-     * Check if a patient exists by its ipp.
+     * Get patient by its ipp.
      * @param patientIpp
      * @return Patient
      ****************************************/
@@ -49,7 +50,7 @@ public class PatientController {
      * Update a patient
      * @param patient
      ****************************************/
-    @PostMapping(value="/gam_process/patient/update",produces={"application/json"})
+    @PutMapping(value="/gam_process/patient/update",produces={"application/json"})
     public ResponseEntity<String> updatePatient(@RequestBody Patient patient) throws NotModificationException, SameIdentityException, NotFoundPatientException {
         try {
             managerService.updatePatient(patient);
@@ -86,10 +87,10 @@ public class PatientController {
      * @param patient
      ****************************************/
     @PostMapping(value="/gam_process/patient/create",produces={"application/json"})
-    public ResponseEntity<String> createPatient(@RequestBody Patient patient) {
+    public ResponseEntity<String> createPatient(@RequestBody PatientEntry patient) {
         try {
-            String ipp = admHL7Service.createPatient(patient);
-            return new ResponseEntity<>("{\"response\":\"patient created with ipp =" + ipp + "}", HttpStatus.OK);
+            Boolean test = admHL7Service.create_hl7(patient);
+            return new ResponseEntity<>("{\"response\":\"patient created with ipp =" + test + "}", HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>("{\"response : error with the database\"}", HttpStatus.INTERNAL_SERVER_ERROR);
         }

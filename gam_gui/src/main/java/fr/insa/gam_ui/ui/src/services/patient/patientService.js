@@ -18,4 +18,11 @@ export default class patientService {
      static async getPatientByIpp(ipp){
         return await patientApi.getPatientByIpp(ipp);
       }
+
+    /**
+     * Update patient.
+     */
+     static async updatePatient(patient){
+        return await patientApi.updatePatient(patient);
+      }
 }

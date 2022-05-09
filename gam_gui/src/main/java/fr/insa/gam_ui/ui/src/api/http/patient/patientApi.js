@@ -1,4 +1,4 @@
-import { defaultConfig } from "../httpConfig";
+import { defaultConfig, multipartConfig } from "../httpConfig";
 import axios from 'axios';
 
 const baseUrl = 'http://localhost:8081/gam_process/patient';
@@ -22,5 +22,12 @@ export default class patientApi {
      */
     static async getPatientByIpp(ipp){
       return axios.get(`${baseUrl}/${ipp}`, defaultConfig);
+    }
+
+    /**
+     * Update patient.
+     */
+     static async updatePatient(patient){
+      return axios.put(`${baseUrl}/update`,patient, multipartConfig);
     }
 }

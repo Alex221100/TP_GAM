@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>Identification du patient</h1>
         <v-text-field label="IPP" type='number' v-model="ipp"></v-text-field>
         <v-btn elevation="2" @click="searchPatient">Search</v-btn>
     </div>
@@ -26,6 +27,7 @@ export default {
               this.$router.push({name: 'Update Patient', params: { ipp: this.ipp }});
               console.log("exist");
           }else{
+              this.$router.push({name: 'Create Patient'});
               console.log("don't exist");
           }
         } catch (error) {

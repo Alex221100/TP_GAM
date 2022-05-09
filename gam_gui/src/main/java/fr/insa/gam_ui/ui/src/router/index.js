@@ -11,6 +11,11 @@ const routes = [
     component: Home
   },
   {
+    path: '/create',
+    name: 'Create Patient',
+    component: () => import('../views/CreatePatient.vue')
+  },
+  {
     path: '/:ipp',
     name: 'Update Patient',
     component: () => import('../views/UpdatePatient.vue')

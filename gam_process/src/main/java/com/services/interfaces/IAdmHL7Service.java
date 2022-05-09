@@ -1,7 +1,10 @@
 package com.services.interfaces;
 
-import com.entity.Patient;
+
+import com.model.PatientEntry;
+
+import java.io.IOException;
 
 public interface IAdmHL7Service {
-    public String createPatient(Patient patient);
+    public Boolean create_hl7(PatientEntry patient) throws Exception;
 }

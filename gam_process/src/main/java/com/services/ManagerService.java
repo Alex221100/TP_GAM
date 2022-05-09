@@ -7,6 +7,7 @@ import com.exceptions.NotModificationException;
 import com.exceptions.SameIdentityException;
 import com.repositories.IPostgreRepository;
 import com.services.interfaces.IManagerService;
+import com.utils.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,7 @@ public class ManagerService implements IManagerService {
         }
 
         entry.setDATE_ENTREE(LocalDate.now().toString());
+        entry.setIEP(IdGenerator.generateId());
 
         int createdCount = postgreRepository.createEntry(entry);
 

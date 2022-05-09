@@ -61,10 +61,12 @@ public class PostgreRepository implements IPostgreRepository{
                     "',PAYS = '" + patient.getPAYS() + "',TEL = '" + patient.getTEL() + "',PAYSN = '" +
                     patient.getPAYSN() + "',DDS = '" + patient.getDDS() + "' WHERE IPP = '" + patient.getIPP() + "';";
 
+            System.out.println("la");
             statement.executeUpdate(sql);
+            int updatedCount = statement.getUpdateCount();
             statement.close();
             connection.close();
-            return statement.getUpdateCount();
+            return updatedCount;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

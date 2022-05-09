@@ -8,7 +8,7 @@ public class Entry {
     private String UF;//Unité fonctionnelle
     private String CHAMBRE;
     private String LIT;
-    private String UFMED;//Ud méciacal
+    private String UFMED;//Ud médical
     private String NUMPAS;//numéro de passage
 
     public String getIPP() {

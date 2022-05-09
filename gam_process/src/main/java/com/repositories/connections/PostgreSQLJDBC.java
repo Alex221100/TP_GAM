@@ -68,6 +68,8 @@ public class PostgreSQLJDBC {
                         NUMPAS VARCHAR(20)
                     );
                     
+                    DELETE FROM Patient;
+                    
                     INSERT INTO Patient (IPP, NOM, PRENOM) VALUES ('455434243', 'Drz', 'Alex');
                     INSERT INTO Patient (IPP, NOM, PRENOM) VALUES ('455434245', 'Ribaut', 'Thomas');
                     """;
