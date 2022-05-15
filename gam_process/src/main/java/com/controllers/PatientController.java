@@ -7,6 +7,7 @@ import com.exceptions.NotFoundPatientException;
 import com.exceptions.NotModificationException;
 import com.exceptions.SameIdentityException;
 import com.services.interfaces.IManagerService;
+import com.utils.PatientParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,7 @@ public class PatientController {
      * @param patientIpp
      * @return Patient
      ****************************************/
+    @CrossOrigin(origins = "*")
     @GetMapping(value="/gam_process/patient/search/{ipp}",produces={"application/json"})
     public ResponseEntity<Boolean> existPatientByIpp(@PathVariable(value = "ipp") String patientIpp) {
         return new ResponseEntity<>(queryService.existPatientByIpp(patientIpp), HttpStatus.OK);
@@ -41,38 +43,37 @@ public class PatientController {
      * @param patientIpp
      * @return Patient
      ****************************************/
+    @CrossOrigin(origins = "*")
     @GetMapping(value="/gam_process/patient/{ipp}",produces={"application/json"})
     public ResponseEntity<Patient> getPatientByIpp(@PathVariable(value = "ipp") String patientIpp) {
         return new ResponseEntity<>(managerService.getPatientByIpp(patientIpp), HttpStatus.OK);
     }
 
     /****************************************
-     * Update a patient
-     * @param patient
+     * Get patient by its ipp.
+     * @param patientIpp
+     * @return Patient
      ****************************************/
-    @PutMapping(value="/gam_process/patient/update",produces={"application/json"})
-    public ResponseEntity<String> updatePatient(@RequestBody Patient patient) throws NotModificationException, SameIdentityException, NotFoundPatientException {
-        try {
-            managerService.updatePatient(patient);
-            return new ResponseEntity<>("{\"response\":\"patient updated\"}", HttpStatus.OK);
-        }catch(NotModificationException e){
-            return new ResponseEntity<>("{\"response : error with the database\"}", HttpStatus.INTERNAL_SERVER_ERROR);
-        }catch(SameIdentityException e){
-            return new ResponseEntity<>("{\"response\":\"many patients have the same ipp\"}", HttpStatus.INTERNAL_SERVER_ERROR);
-        }catch(NotFoundPatientException e) {
-            return new ResponseEntity<>("{\"response\":\"patient with this ipp is not found\"}", HttpStatus.NOT_FOUND);
-        }
+    @CrossOrigin(origins = "*")
+    @GetMapping(value="/gam_process/entry/{ipp}",produces={"application/json"})
+    public ResponseEntity<Entry> getEntryByIpp(@PathVariable(value = "ipp") String patientIpp) {
+        return new ResponseEntity<>(managerService.getEntryByIpp(patientIpp), HttpStatus.OK);
     }
 
     /****************************************
-     * Entry a patient
-     * @param entry
+     * Update a patient
+     * @param patientEntry
      ****************************************/
-    @PutMapping(value="/gam_process/patient/entry",produces={"application/json"})
-    public ResponseEntity<String> updatePatient(@RequestBody Entry entry) throws NotModificationException, SameIdentityException, NotFoundPatientException {
+    @CrossOrigin(origins = "*")
+    @PutMapping(value="/gam_process/patient/update",produces={"application/json"})
+    public ResponseEntity<String> updatePatient(@RequestBody PatientEntry patientEntry) throws NotModificationException, SameIdentityException, NotFoundPatientException {
         try {
-            managerService.entryPatient(entry);
-            return new ResponseEntity<>("{\"response\":\"entry accepted\"}", HttpStatus.OK);
+            Patient patient = PatientParser.toPatient(patientEntry);
+            managerService.updatePatient(patient);
+
+            Entry entry = PatientParser.toEntry(patientEntry);
+            managerService.updateEntry(entry);
+            return new ResponseEntity<>("{\"response\":\"patient updated\"}", HttpStatus.OK);
         }catch(NotModificationException e){
             return new ResponseEntity<>("{\"response : error with the database\"}", HttpStatus.INTERNAL_SERVER_ERROR);
         }catch(SameIdentityException e){
@@ -86,6 +87,7 @@ public class PatientController {
      * Create a patient
      * @param patient
      ****************************************/
+    @CrossOrigin(origins = "*")
     @PostMapping(value="/gam_process/patient/create",produces={"application/json"})
     public ResponseEntity<String> createPatient(@RequestBody PatientEntry patient) {
         try {

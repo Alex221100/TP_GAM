@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Calendar;
 
@@ -97,7 +98,6 @@ public class AdmHL7Service implements IAdmHL7Service {
         this.CHAMBRE = patient.getCHAMBRE();
         this.LIT = patient.getLIT();
         this.UFMED = patient.getUFMED();
-
     }
 
     private String completeZero(int in)
@@ -191,7 +191,7 @@ public class AdmHL7Service implements IAdmHL7Service {
     public boolean create_format(String outputFileName) throws Exception {
         BufferedWriter out = null;
         try {
-            out = new BufferedWriter(new FileWriter(outputFileName));
+            out = new BufferedWriter(new FileWriter("out/" + outputFileName));
             out.write(hl7(ADTMSH));
             out.write(CR);
             out.write(hl7(ADTEVN));

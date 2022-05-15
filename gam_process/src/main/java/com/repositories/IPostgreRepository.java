@@ -8,5 +8,7 @@ public interface IPostgreRepository {
 
     public int updatePatient(Patient patient);
 
-    public int createEntry(Entry entry);
+    public int updateEntry(Entry entry);
+
+    public Entry getEntryByIpp(String patientIpp);
 }

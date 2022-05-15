@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.sql.Timestamp;
+
 @Data
 @NoArgsConstructor
 @ToString
@@ -25,6 +27,23 @@ public class Patient {
     private String TEL;
     private String PAYSN;//Pays de naisssance
     private String DDS;//Démarche de soins
+
+    public Patient(String IPP, String NOM, String PRENOM, String INTIT, String NOMMAR, String DDN, String SEXE, String ADR1, String ADR2, String CP, String VILLE, String PAYS, String TEL, String PAYSN) {
+        this.IPP = IPP;
+        this.NOM = NOM;
+        this.PRENOM = PRENOM;
+        this.INTIT = INTIT;
+        this.NOMMAR = NOMMAR;
+        this.DDN = DDN;
+        this.SEXE = SEXE;
+        this.ADR1 = ADR1;
+        this.ADR2 = ADR2;
+        this.CP = CP;
+        this.VILLE = VILLE;
+        this.PAYS = PAYS;
+        this.TEL = TEL;
+        this.PAYSN = PAYSN;
+    }
 
     public Patient(String DATEMSG, String NUMMSG, String IPP, String NOM, String PRENOM, String INTIT, String NOMMAR, String DDN, String SEXE, String ADR1, String ADR2, String CP, String VILLE, String PAYS, String TEL, String PAYSN, String DDS) {
         this.DATEMSG = DATEMSG;

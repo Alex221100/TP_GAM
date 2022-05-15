@@ -30,32 +30,31 @@ public class ManagerService implements IManagerService {
         System.out.println(updatedCount);
         if (updatedCount == 0){
             throw new NotModificationException();
-        }else if (updatedCount > 1){
-            System.out.println("exception");
-            throw new SameIdentityException();
         }
     }
 
-    public void entryPatient(Entry entry) throws NotModificationException, SameIdentityException, NotFoundPatientException {
+    public void updateEntry(Entry entry) throws NotModificationException, SameIdentityException, NotFoundPatientException {
         if (postgreRepository.getPatientByIpp(entry.getIPP()) == null){
             throw new NotFoundPatientException();
         }
 
-        entry.setDATE_ENTREE(LocalDate.now().toString());
-        entry.setIEP(IdGenerator.generateId());
+        /*if (entry.getDATE_SORTIE() == 'null'){
+            entry.setDATE_SORTIE(null);
+        }*/
 
-        int createdCount = postgreRepository.createEntry(entry);
-
-        if (createdCount == 0){
+        int updatedCount = postgreRepository.updateEntry(entry);
+        System.out.println(updatedCount);
+        if (updatedCount == 0){
             throw new NotModificationException();
-        }else if (createdCount > 1){
-            throw new SameIdentityException();
         }
     }
 
     public Patient getPatientByIpp(String patientIpp){
-        Patient patient = postgreRepository.getPatientByIpp(patientIpp);
-        return patient;
+        return postgreRepository.getPatientByIpp(patientIpp);
+    }
+
+    public Entry getEntryByIpp(String patientIpp){
+        return postgreRepository.getEntryByIpp(patientIpp);
     }
 
 }

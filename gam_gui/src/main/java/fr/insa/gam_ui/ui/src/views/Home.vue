@@ -25,10 +25,8 @@ export default {
           
           if (response.data){
               this.$router.push({name: 'Update Patient', params: { ipp: this.ipp }});
-              console.log("exist");
           }else{
               this.$router.push({name: 'Create Patient'});
-              console.log("don't exist");
           }
         } catch (error) {
             console.log(error);

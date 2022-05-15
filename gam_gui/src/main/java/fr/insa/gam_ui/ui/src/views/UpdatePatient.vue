@@ -1,7 +1,7 @@
 <template>
     <v-container fluid pa-0>
-        <v-row align="center" justify="center" 
-            style="height:100vh" dense>
+        <h1>Modification du patient</h1>
+        <v-row align="center" justify="center" dense>
             <v-col cols="12" lg="6" md="6">
                 <v-card flat tile>
                     <v-text-field 
@@ -15,7 +15,7 @@
                 
                     <v-select
                       :items="entitledList"
-                      v-model="entitled"
+                      v-model="patient.intit"
                       label="Entitled"
                       dense
                       filled
@@ -41,7 +41,8 @@
                         dense
                         filled
                     ></v-text-field>
-                    //date picker
+
+                    <date-picker label="Date de naissance" @date="getBirthdayDate" :date="this.patient.ddn"></date-picker>
 
                     <v-text-field 
                         label="Phone number" 
@@ -62,13 +63,13 @@
                         filled
                     ></v-text-field>
         
-                    <v-autocomplete
-                        v-model="sexe"
+                    <v-select
+                        v-model="patient.sexe"
                         :items="sexeList"
                         dense
                         filled
                         label="Sexe"
-                    ></v-autocomplete>
+                    ></v-select>
 
                     <v-text-field 
                         label="Address 1" 
@@ -108,46 +109,122 @@
             </v-col>
         </v-row>
 
-        <v-row>
-            <v-btn elevation="2" @click="updatePatient">Update Patient</v-btn>
+        <h1>Entrée du patient</h1>
+        <v-row align="center" justify="center" dense>
+            <v-col cols="12" lg="6" md="6">
+                <v-card flat tile>
+                    <v-text-field 
+                        label="UF" 
+                        v-model="entry.uf" 
+                        dense
+                        filled
+                    ></v-text-field>
+
+                    <v-text-field 
+                        label="CHAMBRE" 
+                        v-model="entry.chambre" 
+                        dense
+                        filled
+                    ></v-text-field>
+
+                    <v-text-field 
+                        label="Lit"
+                        v-model="entry.lit" 
+                        dense
+                        filled
+                    ></v-text-field>
+                </v-card>
+            </v-col>
+            
+            
+            <v-col cols="12" lg="6" md="6">
+                <v-card flat tile>
+                    <v-text-field 
+                        label="UFMED" 
+                        v-model="entry.ufmed" 
+                        dense
+                        filled
+                    ></v-text-field>
+
+                    <v-text-field 
+                        label="NUMPAS" 
+                        v-model="entry.numpas" 
+                        dense
+                        filled
+                    ></v-text-field>
+
+                    <date-picker label="Date d'entrée"></date-picker>
+
+
+                </v-card>
+            </v-col>
         </v-row>
+
+        <v-btn elevation="2" @click="updatePatient">Update Patient</v-btn>
     </v-container>
 </template>
 
 <script>
 import patientService from '../services/patient/patientService'
+import DatePicker from '../components/datePicker.vue'
 
 export default({
     data: () => ({
       value: null,
-      initPatient: {},
       patient: {},
+      entry: {},
       entitledList: ['Monsieur', 'Madame', 'Mademoiselle'],
       sexeList: ['Homme', 'Femme']
     }),
+    components:{
+        DatePicker
+    },
     methods:{
         async getPatientByIpp(){
         try{
           const response = await patientService.getPatientByIpp(this.$route.params.ipp);
           
-            this.initPatient = response.data;
-            this.patient = this.initPatient;
+            this.patient = response.data;
         } catch (error) {
             console.log(error);
         }
-    },
+        },
+
+        async getEntryByIpp(){
+        try{
+          const response = await patientService.getEntryByIpp(this.$route.params.ipp);
+          
+            this.entry = response.data;
+        } catch (error) {
+            console.log(error);
+        }
+        },
     async updatePatient(){
         try{
-            console.log(this.patient);
-            await patientService.updatePatient(this.patient);
-            console.log("update realize")
+            const patientEntry = Object.assign( {}, this.entry, this.patient );
+
+console.log(patientEntry);
+            const response = await patientService.updatePatient(patientEntry);
+            
+
+            if (response.status == 200) {
+                alert("Modification effectuée avec succès.");
+                this.$router.push({name: 'Home'});
+            }
+            
         } catch (error) {
             console.log(error);
         }
+    },
+
+    getBirthdayDate (value) {
+        console.log(value)
+        this.patient.ddn = value;
     }
     },
-    mounted(){
+    created(){
         this.getPatientByIpp();
+        this.getEntryByIpp();
     }
 })
 </script>

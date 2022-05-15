@@ -1,5 +1,7 @@
 package com.model;
 
+import java.sql.Timestamp;
+
 public class PatientEntry {
     private String IPP;// a générer
     private String NOM;//
@@ -21,6 +23,9 @@ public class PatientEntry {
     private String CHAMBRE;
     private String LIT;
     private String UFMED;
+    private String DATE_ENTREE;
+    private String DATE_SORTIE;
+    private String NUMPAS;//numéro de passage
 
     public String getIPP() {
         return IPP;
@@ -180,5 +185,29 @@ public class PatientEntry {
 
     public void setUFMED(String UFMED) {
         this.UFMED = UFMED;
+    }
+
+    public String getDATE_ENTREE() {
+        return DATE_ENTREE;
+    }
+
+    public void setDATE_ENTREE(String DATE_ENTREE) {
+        this.DATE_ENTREE = DATE_ENTREE;
+    }
+
+    public String getDATE_SORTIE() {
+        return DATE_SORTIE;
+    }
+
+    public void setDATE_SORTIE(String DATE_SORTIE) {
+        this.DATE_SORTIE = DATE_SORTIE;
+    }
+
+    public String getNUMPAS() {
+        return NUMPAS;
+    }
+
+    public void setNUMPAS(String NUMPAS) {
+        this.NUMPAS = NUMPAS;
     }
 }

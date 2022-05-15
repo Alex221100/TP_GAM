@@ -1,5 +1,7 @@
 package com.entity;
 
+import java.sql.Timestamp;
+
 public class Entry {
     private String IPP;//identifiant permanent du patient
     private String IEP;//identifiant d'entrée du patient
@@ -10,6 +12,18 @@ public class Entry {
     private String LIT;
     private String UFMED;//Ud médical
     private String NUMPAS;//numéro de passage
+
+    public Entry(String IPP, String IEP, String DATE_ENTREE, String DATE_SORTIE, String UF, String CHAMBRE, String LIT, String UFMED, String NUMPAS) {
+        this.IPP = IPP;
+        this.IEP = IEP;
+        this.DATE_ENTREE = DATE_ENTREE;
+        this.DATE_SORTIE = DATE_SORTIE;
+        this.UF = UF;
+        this.CHAMBRE = CHAMBRE;
+        this.LIT = LIT;
+        this.UFMED = UFMED;
+        this.NUMPAS = NUMPAS;
+    }
 
     public String getIPP() {
         return IPP;
