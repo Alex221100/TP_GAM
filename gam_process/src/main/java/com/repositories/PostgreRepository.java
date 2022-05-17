@@ -53,7 +53,6 @@ public class PostgreRepository implements IPostgreRepository{
             Connection connection = PostgreSQLJDBC.getConnection();
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            System.out.println(sql);
             if (rs != null) {
                 if (rs.next()) {
                     entry = new Entry(
@@ -88,7 +87,6 @@ public class PostgreRepository implements IPostgreRepository{
                     "',PAYS = '" + patient.getPAYS() + "',TEL = '" + patient.getTEL() + "',PAYSN = '" +
                     patient.getPAYSN() + "',DDS = '" + patient.getDDS() + "' WHERE IPP = '" + patient.getIPP() + "';";
 
-            System.out.println("la");
             statement.executeUpdate(sql);
             int updatedCount = statement.getUpdateCount();
             statement.close();
@@ -110,7 +108,9 @@ public class PostgreRepository implements IPostgreRepository{
             "',UFMED = '" + entry.getUFMED() + "',NUMPAS = '" + entry.getNUMPAS() + "' WHERE IPP = '" +
                     entry.getIPP() + "';";
 
+            System.out.println(sql);
             int updatedCount = statement.getUpdateCount();
+            System.out.println(updatedCount);
             statement.close();
             connection.close();
             return updatedCount;

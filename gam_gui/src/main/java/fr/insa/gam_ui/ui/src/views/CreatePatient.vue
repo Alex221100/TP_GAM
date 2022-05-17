@@ -5,11 +5,11 @@
             <v-col cols="12" lg="6" md="6">
                 <v-card flat tile>
                     <v-select
-                      :items="entitledList"
-                      v-model="patientEntry.entitled"
-                      label="Entitled"
-                      dense
-                      filled
+                        v-model="patientEntry.intit"
+                        :items="entitledList"
+                        dense
+                        filled
+                        label="Entitled"
                     ></v-select>
 
                     <v-text-field 
@@ -56,7 +56,7 @@
                     ></v-text-field>
         
                     <v-select
-                        v-model="sexe"
+                        v-model="patientEntry.sexe"
                         :items="sexeList"
                         dense
                         filled

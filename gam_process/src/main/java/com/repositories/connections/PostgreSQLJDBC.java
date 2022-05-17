@@ -60,7 +60,7 @@ public class PostgreSQLJDBC {
                         IPP VARCHAR(20),
                         IEP VARCHAR(20),
                         DATE_ENTREE TIMESTAMP,
-                        DATE_SORTIE TIMESTAMP,
+                        DATE_SORTIE VARCHAR(20),
                         UF VARCHAR(20),
                         CHAMBRE VARCHAR(20),
                         LIT VARCHAR(20),

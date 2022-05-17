@@ -33,9 +33,3 @@ services:
       context: ./gam_gui/src/main/java/fr/insa/gam_ui/ui
     ports:
       - "8080:8080"
-
-  back:
-    build:
-      context: ./gam_process
-    ports:
-      - "8081:8081"

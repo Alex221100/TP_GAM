@@ -153,7 +153,7 @@
                         filled
                     ></v-text-field>
 
-                    <date-picker label="Date d'entrée"></date-picker>
+                    <date-picker label="Date d'entrée" :date="this.entry.date_ENTREE" ></date-picker>
 
 
                 </v-card>
@@ -195,6 +195,7 @@ export default({
           const response = await patientService.getEntryByIpp(this.$route.params.ipp);
           
             this.entry = response.data;
+            console.log(this.entry);
         } catch (error) {
             console.log(error);
         }
