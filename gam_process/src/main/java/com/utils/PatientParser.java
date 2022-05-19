@@ -4,6 +4,8 @@ import com.entity.Entry;
 import com.entity.Patient;
 import com.model.PatientEntry;
 
+import java.time.LocalDate;
+
 public class PatientParser {
     public static Patient toPatient(PatientEntry patientEntry){
 
@@ -14,9 +16,9 @@ public class PatientParser {
     }
 
     public static Entry toEntry(PatientEntry patientEntry){
-
+        String releaseDate = patientEntry.getDATE_SORTIE() ? LocalDate.now().toString() : null;
         return new Entry(patientEntry.getIPP(), patientEntry.getIEP(), patientEntry.getDATE_ENTREE(),
-                patientEntry.getDATE_SORTIE(), patientEntry.getUF(), patientEntry.getCHAMBRE(),
+                releaseDate, patientEntry.getUF(), patientEntry.getCHAMBRE(),
                 patientEntry.getLIT(), patientEntry.getUFMED(), patientEntry.getNUMPAS());
     }
 }

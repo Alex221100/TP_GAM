@@ -38,10 +38,6 @@ public class ManagerService implements IManagerService {
             throw new NotFoundPatientException();
         }
 
-        /*if (entry.getDATE_SORTIE() == 'null'){
-            entry.setDATE_SORTIE(null);
-        }*/
-
         int updatedCount = postgreRepository.updateEntry(entry);
         System.out.println(updatedCount);
         if (updatedCount == 0){

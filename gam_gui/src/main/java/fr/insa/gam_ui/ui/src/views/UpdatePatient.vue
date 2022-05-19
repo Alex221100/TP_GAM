@@ -153,8 +153,12 @@
                         filled
                     ></v-text-field>
 
-                    <date-picker label="Date d'entrée" :date="this.entry.date_ENTREE" ></date-picker>
+                    <date-picker label="Date d'entrée" @date="getDateEntree" :date="this.entry.date_ENTREE" ></date-picker>
 
+                    <v-switch
+                        v-model="closeStay"
+                        :label="`Fermer le séjour`"
+                    ></v-switch>
 
                 </v-card>
             </v-col>
@@ -174,7 +178,8 @@ export default({
       patient: {},
       entry: {},
       entitledList: ['Monsieur', 'Madame', 'Mademoiselle'],
-      sexeList: ['Homme', 'Femme']
+      sexeList: ['Homme', 'Femme'],
+      closeStay: false
     }),
     components:{
         DatePicker
@@ -203,8 +208,9 @@ export default({
     async updatePatient(){
         try{
             const patientEntry = Object.assign( {}, this.entry, this.patient );
+            patientEntry.date_SORTIE = this.closeStay;
 
-console.log(patientEntry);
+            console.log(patientEntry);
             const response = await patientService.updatePatient(patientEntry);
             
 
@@ -221,6 +227,9 @@ console.log(patientEntry);
     getBirthdayDate (value) {
         console.log(value)
         this.patient.ddn = value;
+    },
+    getDateEntree(value){
+        this.entry.date_ENTREE = value;
     }
     },
     created(){

@@ -24,7 +24,7 @@ public class PatientEntry {
     private String LIT;
     private String UFMED;
     private String DATE_ENTREE;
-    private String DATE_SORTIE;
+    private Boolean DATE_SORTIE;
     private String NUMPAS;//numéro de passage
 
     public String getIPP() {
@@ -195,11 +195,11 @@ public class PatientEntry {
         this.DATE_ENTREE = DATE_ENTREE;
     }
 
-    public String getDATE_SORTIE() {
+    public Boolean getDATE_SORTIE() {
         return DATE_SORTIE;
     }
 
-    public void setDATE_SORTIE(String DATE_SORTIE) {
+    public void setDATE_SORTIE(Boolean DATE_SORTIE) {
         this.DATE_SORTIE = DATE_SORTIE;
     }
 
