@@ -1,7 +1,7 @@
+server:
+  port: 9292
+
 zuul:
   routes:
     process:
       path: /process/**
-      url: http://localhost:8081/process/
-  host:
-    socket-timeout-millis: 30000
