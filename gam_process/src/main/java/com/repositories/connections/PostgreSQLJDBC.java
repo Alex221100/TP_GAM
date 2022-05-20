@@ -16,7 +16,7 @@ public class PostgreSQLJDBC {
 
         try {
             Class.forName("org.postgresql.Driver");
-            result = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres");
+            result = DriverManager.getConnection("jdbc:postgresql://postgres:5432/postgres", "postgres", "postgres");
 
             if (!hasCreatedTables) {
                 createTables();

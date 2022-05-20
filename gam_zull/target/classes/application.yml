@@ -1,0 +1,16 @@
+server:
+  port: 8111
+spring:
+  application:
+    name: zuulserver
+
+zuul:
+  routes:
+    process:
+      path: /process/**
+      stripPrefix: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka/
