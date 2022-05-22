@@ -6,12 +6,19 @@ import com.repositories.connections.PostgreSQLJDBC;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.logging.Logger;
 
 @Repository
 public class PostgreRepository implements IPostgreRepository{
+
+    static Logger logger = Logger.getLogger("Gam_Logger");
+
     public Patient getPatientByIpp(String patientIpp) {
         Patient patient = null;
         String sql = "SELECT * FROM Patient WHERE IPP= '" + patientIpp + "';";
+
+        logger.info("Begin getPatientByIpp...");
+
         try {
             Connection connection = PostgreSQLJDBC.getConnection();
             Statement stmt = connection.createStatement();
@@ -41,7 +48,8 @@ public class PostgreRepository implements IPostgreRepository{
             }
         }
         catch(Exception e) {
-            System.err.println("Impossible de récupérer le patient : " + e.getMessage());
+            logger.info("Error during the recover of the patient");
+            e.printStackTrace();
         }
         return patient;
     }
@@ -49,6 +57,7 @@ public class PostgreRepository implements IPostgreRepository{
     public Entry getEntryByIpp(String patientIpp){
         Entry entry = null;
         String sql = "SELECT * FROM Entry WHERE IPP= '" + patientIpp + "' AND DATE_SORTIE is NULL;";
+        logger.info("Begin getEntryByIpp...");
         try {
             Connection connection = PostgreSQLJDBC.getConnection();
             Statement stmt = connection.createStatement();
@@ -70,12 +79,14 @@ public class PostgreRepository implements IPostgreRepository{
             }
         }
         catch(Exception e) {
-            System.err.println("Impossible de récupérer l'entrée : " + e.getMessage());
+            logger.info("Error during the recover of the entry");
+            e.printStackTrace();
         }
         return entry;
     }
 
     public int updatePatient(Patient patient){
+        logger.info("Begin updatePatient...");
         try {
             Connection connection = PostgreSQLJDBC.getConnection();
             Statement statement = connection.createStatement();
@@ -93,12 +104,14 @@ public class PostgreRepository implements IPostgreRepository{
             connection.close();
             return updatedCount;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.info("Error during the updated of the patient");
+            e.printStackTrace();
         }
         return 0;
     }
 
     public int updateEntry(Entry entry){
+        logger.info("Begin updateEntr...");
         try {
             Connection connection = PostgreSQLJDBC.getConnection();
             Statement statement = connection.createStatement();
@@ -108,14 +121,14 @@ public class PostgreRepository implements IPostgreRepository{
             "',UFMED = '" + entry.getUFMED() + "',NUMPAS = '" + entry.getNUMPAS() + "' WHERE IPP = '" +
                     entry.getIPP() + "';";
 
-            System.out.println(sql);
             int updatedCount = statement.getUpdateCount();
-            System.out.println(updatedCount);
+
             statement.close();
             connection.close();
             return updatedCount;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.info("Error during the updated of the entry");
+            e.printStackTrace();
         }
         return 0;
     }

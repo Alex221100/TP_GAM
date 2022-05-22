@@ -2,7 +2,6 @@ package com.services;
 
 import com.entity.Patient;
 import com.repositories.IPostgreRepository;
-import com.services.interfaces.IAdmHL7Service;
 import com.services.interfaces.IQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,19 +1,19 @@
 package com.services;
 
-import com.entity.Patient;
 import com.model.PatientEntry;
 import com.services.interfaces.IAdmHL7Service;
 import com.utils.IdGenerator;
 import org.springframework.stereotype.Service;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.logging.Logger;
 
 @Service
 public class AdmHL7Service implements IAdmHL7Service {
+
+    static Logger logger = Logger.getLogger("Gam_Logger");
 
     //format du fichier de sortie HL7 ORU vers la base de données.
     //ORU out
@@ -69,6 +69,7 @@ public class AdmHL7Service implements IAdmHL7Service {
      * @param patient
      *************************************************************/
     public void initPatient(PatientEntry patient) {
+        logger.info("Begin the initialisation of the patient...");
         Calendar c=Calendar.getInstance();
 
         //Patient
@@ -98,6 +99,8 @@ public class AdmHL7Service implements IAdmHL7Service {
         this.CHAMBRE = patient.getCHAMBRE();
         this.LIT = patient.getLIT();
         this.UFMED = patient.getUFMED();
+
+        logger.info("Initialisation of the patient successful");
     }
 
     private String completeZero(int in)
@@ -115,6 +118,7 @@ public class AdmHL7Service implements IAdmHL7Service {
      * @throws java.lang.Exception Erreur replaceAll
      *********************************************************************/
     private String hl7(String in) throws Exception {
+        logger.info("Begin the replacement of the data in the hl7 format...");
         String outS = in;
         //Segment MSH
         outS = outS.replaceAll("#DATEMSG#", Date_to_Date_HL7_long(DATEMSG));
@@ -145,6 +149,7 @@ public class AdmHL7Service implements IAdmHL7Service {
         //segment ZFU
         outS = outS.replaceAll("#UFMED#", UFMED);
 
+        logger.info("Replacement of the data in the hl7 format successful");
         return outS;
     }
 
@@ -189,6 +194,7 @@ public class AdmHL7Service implements IAdmHL7Service {
      * @throws java.lang.Exception Erreur d'ecriture sur disque
      ***************************************************/
     public boolean create_format(String outputFileName) throws Exception {
+        logger.info("Begin to write in a file...");
         BufferedWriter out = null;
         try {
             out = new BufferedWriter(new FileWriter("out/" + outputFileName));
@@ -206,7 +212,10 @@ public class AdmHL7Service implements IAdmHL7Service {
             out.write(CR);
             out.write(hl7(ADTZRE));
             out.flush();
+
+            logger.info("Creation of the file successful");
         } catch (Exception e) {
+            logger.info("Error during the writing in the file...");
             e.printStackTrace();
             return false;
         } finally {
@@ -222,13 +231,13 @@ public class AdmHL7Service implements IAdmHL7Service {
      * @return boolean
      ***************************************************/
     public Boolean create_hl7(PatientEntry patient) throws Exception {
+        logger.info("Begin the creation of the hl7 file...");
 
         //init patient
         initPatient(patient);
 
-        return create_format("test_hl7");
         //write in file
-
+        return create_format("test_hl7");
     }
 
 }

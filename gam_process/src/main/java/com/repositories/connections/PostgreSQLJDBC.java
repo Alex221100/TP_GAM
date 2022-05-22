@@ -3,16 +3,21 @@ package com.repositories.connections;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 public class PostgreSQLJDBC {
 
     private static boolean hasCreatedTables = false;
+
+    static Logger logger = Logger.getLogger("Gam_Logger");
 
     private PostgreSQLJDBC() {
     }
 
     public static Connection getConnection() {
         Connection result = null;
+
+        logger.info("Connection to the database begin...");
 
         try {
             Class.forName("org.postgresql.Driver");
@@ -22,16 +27,19 @@ public class PostgreSQLJDBC {
                 createTables();
             }
         } catch (Exception e) {
+            logger.info("Error during the connection to the database");
             e.printStackTrace();
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
-        System.out.println("Opened database successfully");
+
+        logger.info("Connection to the database successful");
 
         return result;
     }
 
     private static void createTables() {
         hasCreatedTables = true;
+        logger.info("Begin the creation of the tables");
+
         try {
             Connection connection = getConnection();
             Statement statement = connection.createStatement();
@@ -75,10 +83,13 @@ public class PostgreSQLJDBC {
                     """;
             statement.executeUpdate(sql);
 
+            logger.info("Creation of the table in the database successful");
+
             statement.close();
             connection.close();
         } catch (Exception e) {
-            System.err.println("Impossible de créer la table : " + e.getMessage());
+            logger.info("Error during the creation of the database");
+            e.printStackTrace();
         }
     }
 }
