@@ -23,7 +23,6 @@ public class ManagerService implements IManagerService {
         }
 
         int updatedCount = postgreRepository.updatePatient(patient);
-        System.out.println("ici");
         System.out.println(updatedCount);
         if (updatedCount == 0){
             throw new NotModificationException();
