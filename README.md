@@ -28,12 +28,14 @@ La commande va lancer notre docker-compose qui va créer la stack. On retrouve :
   - IPP connu -> Mise à jour du patient, l'entrée qui apparaît est celle où aucune date de sortie n'est ajoutée. 
 
   ## Config-Server
+  Projet réalisé mais ne fonctionne pas.
   
   ## ZULL
+  Projet réalisé mais ne fonctionne pas.
   
   ## Mirth Connect
-  
-  
+  Création des fichiers hl7 mais ne fonctionne pas dans Mirth Connect.
+ 
    ## Crédits
    
    RIBAUT THOMAS : https://github.com/Dopey990.  
