@@ -1,5 +1,9 @@
 package com.repositories.connections;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -21,8 +25,21 @@ public class PostgreSQLJDBC {
 
         try {
             Class.forName("org.postgresql.Driver");
-            result = DriverManager.getConnection("jdbc:postgresql://postgres:5432/postgres", "postgres", "postgres");
+            URL url = new URL("localhost:8888/config/getDbURL");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
 
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuilder content = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            in.close();
+
+            result = DriverManager.getConnection(content.length() > 0 ? content.toString() : "jdbc:postgresql://postgres:5432/postgres", "postgres", "postgres");
+
+            con.disconnect();
             if (!hasCreatedTables) {
                 createTables();
             }

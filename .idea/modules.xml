@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/TP_GAM.iml" filepath="$PROJECT_DIR$/.idea/TP_GAM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gam_configServer/demo.iml" filepath="$PROJECT_DIR$/gam_configServer/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gam_process/gam_process.iml" filepath="$PROJECT_DIR$/gam_process/gam_process.iml" />
+    </modules>
+  </component>
+</project>
